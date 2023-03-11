@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
-const mongoURI = 'mongodb+srv://Foody:H8i1m4%2E%40@cluster0.j4oy6pv.mongodb.net/foodzy?retryWrites=true&w=majority';
+mongoose.set('strictQuery', true);
+const mongoURI = 'mongodb+srv://Food:H8i1m4..@cluster0.rypssog.mongodb.net/food?retryWrites=true&w=majority';
 
 // var database = mongoURI.getDb("foodzy");
 const connectToMongo =async() =>{
@@ -9,12 +9,13 @@ const connectToMongo =async() =>{
             console.log(err);
         else {
             console.log("connected!");
-            const fetched_data = await mongoose.connection.database.collection("foodmenu");
+            // console.log(mongoose.connection);
+            const fetched_data = await mongoose.connection.db.collection("food_menu");
             fetched_data.find({}).toArray(function (err, data) {
                 if (err)
                     console.log(err);
                 else
-                    console.log(data);
+                    console.log("Done");
             });
         }
     });
