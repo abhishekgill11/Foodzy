@@ -1,8 +1,8 @@
 
-import Card from '../components/Card'
-import Carousal from '../components/Carousal'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
+import Card from '../components/Card.js'
+import Carousal from '../components/Carousal.js'
+import Footer from '../components/Footer.js'
+import Navbar from '../components/Navbar.js'
 
 export default function Home() {
     return (
