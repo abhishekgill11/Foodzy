@@ -1,8 +1,8 @@
 // setting up express 
 const express = require('express')
 const app = express()
-// const cors = require('https://')
-// app.use(cors({ origin: 'https://localhost:3000' }));
+const cors = require('cors')
+app.use(cors({ origin: 'http://localhost:3000' }));
 const port = 4000
 const  connectToMongo = require("./database")
 // app.use((req,res,next ) => {
@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
 })
 app.use(express.json())
 app.use('/api/', require("./Routes/CreateUser"));
+app.use('/api/', require("./Routes/DisplayData"));
 app.listen(port, () => {
     console.log(`Connected to Mongodb ${port}`)
 })

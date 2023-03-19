@@ -11,11 +11,19 @@ const connectToMongo =async() =>{
             console.log("connected!");
             // console.log(mongoose.connection);
             const fetched_data = await mongoose.connection.db.collection("food_menu");
-            fetched_data.find({}).toArray(function (err, data) {
-                if (err)
+            fetched_data.find({}).toArray(async function (err, data) {
+                const foodCategory = await mongoose.connection.db.collection("foodCategory");
+                foodCategory.find({}).toArray(function (err, catData) {
+                    if (err)
                     console.log(err);
                 else
-                    console.log("Done");
+                    global.food_menu = data;
+                    global.foodCategory = catData;
+                })
+                // if (err)
+                //     console.log(err);
+                // else
+                //     global.food_menu = data;
             });
         }
     });
