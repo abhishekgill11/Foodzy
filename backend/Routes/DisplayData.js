@@ -1,13 +1,15 @@
 const express = require('express')
 const router = express.Router()
-
-router.post('/foodData', (req,res) => {
+router.post('/foodData', async (req, res) => {
     try {
-        res.send([global.food_menu, global.foodCategory])
-        console.log(global.food_menu)
-    } catch(error) {
-        console.error(error.message);
+        // console.log( JSON.stringify(global.foodData))
+        // const userId = req.user.id;
+        // await database.listCollections({name:"food_items"}).find({});
+        res.send([global.foodData, global.foodCategory])
+    } catch (error) {
+        console.error(error.message)
         res.send("Server Error")
+
     }
 })
 module.exports = router;
