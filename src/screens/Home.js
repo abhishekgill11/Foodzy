@@ -36,7 +36,7 @@ export default function Home() {
     return (
         <div>
             <div> <Navbar /> </div>
-            <div> <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousal" style={{ objectFit: "contain !important" }}>
+            <div> <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !important" }}>
                 <div className="carousel-inner" id='carousel'>
                     <div className="carousel-caption" style={{ zIndex: "10" }}>
                         <div className="d-flex justify-content-center">
@@ -73,7 +73,8 @@ export default function Home() {
                                 {foodmenu !== [] ? foodmenu.filter((item) => (item.CategoryName === data.CategoryName) && (item.name.toLowerCase().includes(search.toLocaleLowerCase()))).map(filterItems => {
                                     return (
                                         <div key={filterItems._id} className="col-12 col-md-6 col-lg-3">
-                                            <Card foodName={filterItems.name} options={filterItems.options[0]} imgSrc={filterItems.img}></Card>
+                                            <Card id={filterItems._id} foodName = {filterItems.name}
+                                             options={filterItems.options[0]} imgSrc = {filterItems.img} ></Card>
                                         </div>
                                     )
                                 })
