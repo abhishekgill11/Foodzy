@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useDispatchCart, useCart } from './ContextReducer.js';
 export default function Card(props) {
     let dispatch = useDispatchCart();
     let data = useCart()
+    const priceRef = useRef();
     let options = props.options;
     let priceOptions = Object.keys(options)
     const [qty, setQty] = useState(1)
@@ -10,11 +11,31 @@ export default function Card(props) {
     //const { _id, foodName, finalPrice, imgSrc } = props;
    // let foodItem = props.foodItems;
     const handleAddtoCart = async () =>
-    {  console.log(props)
-       await dispatch({type:"ADD", _id:props.id, name:props.foodName, price: props.finalPrice, qty: qty, size: size, img: props.imgSrc })
-       console.log(data)
-       
+    {  let food = []
+        for(const item of data) {
+            if(item.id === props.foodItem._id) {
+                food  = item;
+
+                break;
+            }
+        }
+        if(food!==[]){
+            if(food.size === size) {
+                await dispatch({ type: "UPDATE", _id: props.id, price: finalPrice, qty: qty})
+                return
+            }
+            else if(food.size !== size){
+                await dispatch({type:"ADD", _id:props.id, name:props.foodName, price: finalPrice, qty: qty, size: size, img: props.imgSrc })
+                return 
+            }
+            return
+        }
+        await dispatch({type:"ADD", _id:props.id, name:props.foodName, price: finalPrice, qty: qty, size: size, img: props.imgSrc })
     }
+    let finalPrice = qty * parseInt(options[size]);
+    useEffect(() => {
+        setSize(priceRef.current.value)
+    }, [])
     return (
         <div>
         <div> 
@@ -31,13 +52,13 @@ export default function Card(props) {
                                     <option key={i + 1} value={i + 1}> {i + 1}</option>
                                 )
                             })}                    </select>
-                    <select className='m-2 h-100 bg-success rounded' onChange={(e)=> setSize(e.target.value)}>
+                    <select className='m-2 h-100 bg-success rounded' ref = {priceRef} onChange={(e)=> setSize(e.target.value)}>
                        {priceOptions.map((data)=>{
                         return <option key={data} value={data}>{data}</option>
                        })}
                     </select>
                     <div className='d-inline h-100 fs-5'>
-                        Total Price
+                    ₹{finalPrice}/-
                     </div>
                 </div>
                 <hr/>

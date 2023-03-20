@@ -8,8 +8,7 @@ export default function Home() {
     const [search, setSearch] = useState('');
     const [foodCat, setFoodCat] = useState([]);
     const [foodmenu, setFoodmenu] = useState([]);
-
-
+    const [isLoading, setIsLoading] = useState(true);
     const loadData = async () => {
         try {
             let response = await fetch("http://localhost:4000/api/foodData", {
@@ -24,6 +23,7 @@ export default function Home() {
             response = await response.json();
             setFoodmenu(response[0]);
             setFoodCat(response[1]);
+            setIsLoading(false);
             // console.log(response[0],response[1])
         } catch (error) {
             console.log('There was a problem fetching the data: ', error);
@@ -33,8 +33,10 @@ export default function Home() {
         loadData()
     }, [])
 
+
     return (
         <div>
+            
             <div> <Navbar /> </div>
             <div> <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{ objectFit: "contain !important" }}>
                 <div className="carousel-inner" id='carousel'>
@@ -65,8 +67,9 @@ export default function Home() {
             </div></div>
             <div className='container'>
                 {
-                    foodCat !== []
-                        ? foodCat.map((data) => {
+                    // foodCat !== []
+                    //     ? foodCat.map((data) => {
+                        foodmenu && foodCat && foodCat.map((data) => {
                             return (<div className='row mb-3'>
                                 <div key={data._id} className="fs-3 m-3">{data.CategoryName}</div>
                                 <hr />
@@ -82,11 +85,12 @@ export default function Home() {
                                     : <div>No such data found</div>}
                             </div>
                             )
-                        }) : " "
+                        }) 
                 }
 
             </div>
             <div> <Footer /> </div>
+        
         </div>
     )
 }
